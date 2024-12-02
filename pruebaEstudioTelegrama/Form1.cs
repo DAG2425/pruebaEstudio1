@@ -21,21 +21,18 @@ namespace pruebaEstudioTelegrama
         {
             string textoTelegrama;
             char tipoTelegrama = ' ';
-            int numPalabras = 0;
             double coste;
-
-            //Leo el telegrama  
             textoTelegrama = txtTelegrama.Text;
-            // telegrama urgente? 
+
+            char[] delimitadores = new char[] { ' ', '\r' , '\n' };
+            int numPalabras = textoTelegrama.Split(delimitadores, StringSplitOptions.RemoveEmptyEntries).Length;
+
             if (chkUrgente.Checked)
             {
                 tipoTelegrama = 'u';
             }
-            //Obtengo el número de palabras que forma el telegrama  
-            numPalabras = textoTelegrama.Length;
 
-            //Si el telegrama es ordinario 
-            if (tipoTelegrama == 'o')
+            if (tipoTelegrama != 'u')
             {
                 if (numPalabras <= 10)
                 {
@@ -43,7 +40,7 @@ namespace pruebaEstudioTelegrama
                 }
                 else
                 {
-                    coste = 0.5 * numPalabras;
+                    coste = 2.5 + (0.5 * (numPalabras - 10));
                 }
             }
             else
@@ -57,7 +54,7 @@ namespace pruebaEstudioTelegrama
                     }
                     else
                     {
-                        coste = 5 + 0.75 * (numPalabras - 10);
+                        coste = 5 + (0.75 * (numPalabras - 10));
                     }
                 }
                 else
