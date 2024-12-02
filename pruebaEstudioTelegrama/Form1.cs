@@ -20,48 +20,28 @@ namespace pruebaEstudioTelegrama
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             string textoTelegrama;
-            char tipoTelegrama = ' ';
-            double coste;
+            double coste = 0;
             textoTelegrama = txtTelegrama.Text;
 
             char[] delimitadores = new char[] { ' ', '\r' , '\n' };
             int numPalabras = textoTelegrama.Split(delimitadores, StringSplitOptions.RemoveEmptyEntries).Length;
 
-            if (chkUrgente.Checked)
-            {
-                tipoTelegrama = 'u';
-            }
-
-            if (tipoTelegrama != 'u')
-            {
+            if (rdbOrdinario.Checked)
                 if (numPalabras <= 10)
-                {
                     coste = 2.5;
-                }
                 else
-                {
-                    coste = 2.5 + (0.5 * (numPalabras - 10));
-                }
-            }
-            else
-            //Si el telegrama es urgente 
-            {
-                if (tipoTelegrama == 'u')
-                {
-                    if (numPalabras <= 10)
-                    {
-                        coste = 5;
-                    }
-                    else
-                    {
-                        coste = 5 + (0.75 * (numPalabras - 10));
-                    }
-                }
+                    coste = 2.5 + 0.5 * (numPalabras - 10);
+
+            if (rdbUrgente.Checked)
+                if (numPalabras <= 10)
+                    coste = 5;
                 else
-                {
-                    coste = 0;
-                }
-            }
+                    coste = 5 + 0.75 * (numPalabras - 10);
+
+            if (!rdbOrdinario.Checked && !rdbUrgente.Checked)
+                MessageBox.Show("Poe favor, indica el tipo de telegrama a enviar");
+          
+
             txtPrecio.Text = coste.ToString() + " euros";
         }
     }
